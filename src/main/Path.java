@@ -167,7 +167,7 @@ public class Path {
             printPathShort(from, s, 1);
 
             if (flag == 0) {
-                System.out.print(to + ".");
+                System.out.print(to + ".\nCost:" + Math.round(this.cost[this.tempMap.get(to)]));
             } else {
                 System.out.print(to + "-->");
 
