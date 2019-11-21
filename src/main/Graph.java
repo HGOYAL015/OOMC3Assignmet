@@ -75,7 +75,7 @@ public class Graph {
 
     }
 
-    public void addEdge(String from, String to, Double Weight) {
+    public void addEdge(String from, String to, double Weight) {
 
         this.Edges.get(from).add(to);
         this.WeightMap.put(from + "?" + to, Weight);
@@ -105,11 +105,7 @@ public class Graph {
         }
     }
 
-    public ArrayList<String> getEdgeList(String from) {
-        int g = map.get(from) - 1;
-        return E.get(g);
-
-    }
+    
 
     public void sortVertex() {
         VertexCompare Compare = new VertexCompare();
@@ -136,7 +132,13 @@ public class Graph {
     public void searchVertex(Vertex e) throws Invalid {
         for (Vertex A : V) {
 
-            if (A.getName().equals(e.getName()) || (A.getX() == e.getX() && A.getY() == e.getY())) {
+            int a = A.getX();
+            int b = A.getY();
+            a = Math.abs(a - e.getX());
+            b = Math.abs(b - e.getY());
+            int ans = (int) Math.round(Math.sqrt(a * a + b * b));
+            if (A.getName().equals(e.getName()) || (ans <= 25)) {
+
                 throw new Invalid("Vertex is Already Present");
 
             }
@@ -154,6 +156,30 @@ public class Graph {
         }
         if (flag == 0) {
             throw new Invalid("Vertex with name: " + name + " Not Found\n");
+
+        }
+        return null;
+    }
+
+    public Vertex searchVertex(int x, int y) throws Invalid {
+        int flag = 0;
+
+        for (Vertex A : V) {
+            int a = A.getX();
+            int b = A.getY();
+            a = Math.abs(a - x);
+            b = Math.abs(b - y);
+            int ans = (int) Math.round(Math.sqrt(a * a + b * b));
+            if (ans <= 12) {
+                
+                flag = 1;
+                return A;
+
+            }
+
+        }
+        if (flag == 0) {
+            throw new Invalid("Vertex with name: " + " Not Found\n");
 
         }
         return null;

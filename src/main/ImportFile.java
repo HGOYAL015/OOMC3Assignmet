@@ -114,8 +114,8 @@ public class ImportFile extends javax.swing.JFrame {
                     String s = scan.nextLine();
                     String[] input = s.split(" ");
                     try {
-                        double xx = Double.parseDouble(input[1]);
-                        double yy = Double.parseDouble(input[2]);
+                        int xx = Integer.parseInt(input[1]);
+                        int yy = Integer.parseInt(input[2]);
                         V = new Vertex(input[0], xx, yy);
                         try {
                             OOM.G.searchVertex(V);

@@ -178,8 +178,8 @@ public class AddVertex extends javax.swing.JFrame {
         try {
             this.checkVertex();
             try {
-                double xx = Double.parseDouble(x);
-                double yy = Double.parseDouble(y);
+                int xx = Integer.parseInt(x);
+                int yy = Integer.parseInt(y);
                 Vertex V = new Vertex(name, xx, yy);
                 try {
                     OOM.G.searchVertex(V);

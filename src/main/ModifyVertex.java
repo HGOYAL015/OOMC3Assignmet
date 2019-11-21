@@ -172,16 +172,14 @@ public class ModifyVertex extends javax.swing.JFrame {
             this.checkVertex();
             try {
                 Vertex V = G.searchVertex(name);
-                try{
-                    V.setX(Double.parseDouble(xcor.getText()));
-                    V.setY(Double.parseDouble(ycor.getText()));
+                try {
+                    V.setX(Integer.parseInt(xcor.getText()));
+                    V.setY(Integer.parseInt(ycor.getText()));
                     JOptionPane.showMessageDialog(null, "Success");
-                    
-                }
-                catch(Exception e){
-                    JOptionPane.showMessageDialog(null,"Please Enter Valid Coordinates");
-                }
-                finally{
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Please Enter Valid Coordinates");
+                } finally {
                     this.dispose();
                 }
             } catch (Invalid e) {

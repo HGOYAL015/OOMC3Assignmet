@@ -16,9 +16,9 @@ import java.util.Comparator;
 public class Vertex {
 
     private String name;
-    private double x, y;
+    private int x, y;
 
-    public Vertex(String name, double x, double y) {
+    public Vertex(String name, int x, int y) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -32,19 +32,19 @@ public class Vertex {
         this.name = name;
     }
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
-    public void setX(double x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
 
-    public void setY(double y) {
+    public void setY(int y) {
         this.y = y;
     }
 
