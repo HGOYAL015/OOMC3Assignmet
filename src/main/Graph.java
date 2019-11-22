@@ -78,7 +78,11 @@ public class Graph {
     public void addEdge(String from, String to, double Weight) {
 
         this.Edges.get(from).add(to);
+        this.Edges.get(to).add(from);
+
         this.WeightMap.put(from + "?" + to, Weight);
+        this.WeightMap.put(to + "?" + from, Weight);
+
         System.out.println(Edges);
 //        System.out.println(E);
 //        System.out.println(E.get(g));
@@ -87,7 +91,10 @@ public class Graph {
     public void deleteEdge(String from, String to) {
 
         this.Edges.get(from).remove(to);
+        this.Edges.get(to).remove(from);
         WeightMap.remove(from + "?" + to);
+        WeightMap.remove(to + "?" + from);
+
 //        System.out.println(WeightMap);
 //        System.out.println(E.get(g));
     }
@@ -104,8 +111,6 @@ public class Graph {
 
         }
     }
-
-    
 
     public void sortVertex() {
         VertexCompare Compare = new VertexCompare();
@@ -171,7 +176,7 @@ public class Graph {
             b = Math.abs(b - y);
             int ans = (int) Math.round(Math.sqrt(a * a + b * b));
             if (ans <= 12) {
-                
+
                 flag = 1;
                 return A;
 

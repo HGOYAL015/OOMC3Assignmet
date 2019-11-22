@@ -1,3 +1,2 @@
-A-->B.
-A-->C-->B.
-A-->C-->D-->B.
+E-->B-->A-->C.
+Cost:5main.Vertex@35e418f5 main.Vertex@64e38b1
