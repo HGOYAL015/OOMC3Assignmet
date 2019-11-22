@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import static main.VisualGraphics.anim;
 import static main.VisualGraphics.ax;
 import static main.VisualGraphics.ay;
+import static main.VisualGraphics.hg;
+import static main.VisualGraphics.style;
 
 /**
  *
@@ -97,9 +99,34 @@ class visual extends JPanel {
             }
         }
         if (anim == 1) {
-            gg.setColor(Color.green);
+            gg.setColor(Color.black);
             gg.setStroke(new BasicStroke(2));
-            gg.fillOval(ax - 6, ay - 6, 12, 12);
+            if (style == 1) {
+                gg.drawOval(ax - 6, ay - 6, 12, 12);
+            } else if (style == 2) {
+                gg.drawRect(ax - 6, ay - 6, 12, 12);
+            } else if (style == 3) {
+                gg.setStroke(new BasicStroke(3));
+                gg.setColor(Color.black);
+                gg.drawLine(ax, ay, ax - 12, ay);
+                gg.drawLine(ax, ay, ax, ay + 12);
+                gg.drawLine(ax, ay, ax + 12, ay);
+                gg.drawLine(ax, ay, ax, ay - 12);
+            } else if (style == 4) {
+                gg.setStroke(new BasicStroke(3));
+                gg.setColor(Color.black);
+
+                gg.drawLine(ax - 9, ay - 9, ax + 9, ay + 9);
+                gg.drawLine(ax - 9, ay + 9, ax + 9, ay - 9);
+
+            } else if (style == 5) {
+                gg.setStroke(new BasicStroke(2));
+                gg.setColor(Color.black);
+                int X[] = {ax, ax, ax + 9, ax};
+                int Y[] = {ay, ay + 9, ay, ay - 9};
+                gg.drawPolygon(X, Y, X.length);
+            }
+
         }
     }
 }
@@ -133,7 +160,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
 //    choice=3 //ModifyVertex
 //    choice=4 //DeleteVertex
 //    choice=5 //DeleteEdge
-    static int choice = 5;
+    static int choice = 5, style = 1;
     static Vertex From = null;
     static Vertex To = null;
     static int anim = 0;
@@ -167,6 +194,12 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         Back = new javax.swing.JButton();
         AnimateR = new javax.swing.JRadioButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        Circle = new javax.swing.JRadioButton();
+        Square = new javax.swing.JRadioButton();
+        Cross = new javax.swing.JRadioButton();
+        Plus = new javax.swing.JRadioButton();
+        Triangle = new javax.swing.JRadioButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -216,7 +249,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
             .addGroup(GraphPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Label)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(714, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(java.awt.Color.gray);
@@ -365,10 +398,93 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        Circle.setBackground(java.awt.Color.gray);
+        Circle.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        Circle.setSelected(true);
+        Circle.setText("Circle");
+        Circle.setToolTipText("Select Style");
+        Circle.setBorder(null);
+        Circle.setBorderPainted(true);
+        Circle.setContentAreaFilled(false);
+        Circle.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Circle.setFocusPainted(false);
+        Circle.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        Circle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CircleActionPerformed(evt);
+            }
+        });
+
+        Square.setBackground(java.awt.Color.gray);
+        Square.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        Square.setText("Square");
+        Square.setToolTipText("Select Style");
+        Square.setBorder(null);
+        Square.setBorderPainted(true);
+        Square.setContentAreaFilled(false);
+        Square.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Square.setFocusPainted(false);
+        Square.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        Square.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SquareActionPerformed(evt);
+            }
+        });
+
+        Cross.setBackground(java.awt.Color.gray);
+        Cross.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        Cross.setText("Cross");
+        Cross.setToolTipText("Select Style");
+        Cross.setBorder(null);
+        Cross.setBorderPainted(true);
+        Cross.setContentAreaFilled(false);
+        Cross.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Cross.setFocusPainted(false);
+        Cross.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        Cross.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrossActionPerformed(evt);
+            }
+        });
+
+        Plus.setBackground(java.awt.Color.gray);
+        Plus.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        Plus.setText("Plus");
+        Plus.setToolTipText("Select Style");
+        Plus.setBorder(null);
+        Plus.setBorderPainted(true);
+        Plus.setContentAreaFilled(false);
+        Plus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Plus.setFocusPainted(false);
+        Plus.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        Plus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PlusActionPerformed(evt);
+            }
+        });
+
+        Triangle.setBackground(java.awt.Color.gray);
+        Triangle.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        Triangle.setText("Triangle");
+        Triangle.setToolTipText("Select Style");
+        Triangle.setBorder(null);
+        Triangle.setBorderPainted(true);
+        Triangle.setContentAreaFilled(false);
+        Triangle.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Triangle.setFocusPainted(false);
+        Triangle.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        Triangle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TriangleActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
+            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,20 +495,24 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                             .addComponent(AddE, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ModifyV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(AddV, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(DeleteV, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                            .addComponent(DeleteV, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
                         .addGap(29, 29, 29))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(ShortPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AnimateR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Circle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Square, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Cross, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Triangle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(83, 83, 83)
                 .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(AnimateR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jSeparator1)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -413,11 +533,23 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                 .addComponent(ShortPath, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AnimateR, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addGap(94, 94, 94)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Circle, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Square, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Cross, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Plus, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Triangle, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(232, 232, 232))
+                .addGap(88, 88, 88))
         );
 
         jMenu1.setText("File");
@@ -449,7 +581,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(GraphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -650,7 +782,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         choice = 1;
-        ButtonGroup G1;
+        ButtonGroup G1, G2;
         G1 = new ButtonGroup();
         G1.add(AddE);
         G1.add(AddV);
@@ -659,6 +791,14 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         G1.add(ModifyE);
         G1.add(ModifyV);
         G1.add(ShortPath);
+
+        G2 = new ButtonGroup();
+        G2.add(Circle);
+        G2.add(Square);
+        G2.add(Cross);
+        G2.add(Plus);
+        G2.add(Triangle);
+
         if (h != null) {
             h.interrupt();
         }
@@ -997,6 +1137,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                 hg.add(new P(a, b));
             }
             anim = 1;
+            choice = 0;
 //            GraphPanel.repaint();
             System.out.println("sdafds" + this);
             h = new Thread(this);
@@ -1020,6 +1161,46 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
             repaint();
         }
     }//GEN-LAST:event_AnimateRActionPerformed
+
+    private void CircleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CircleActionPerformed
+        // TODO add your handling code here:
+        if (Circle.isSelected()) {
+            style = 1;
+            repaint();
+        }
+    }//GEN-LAST:event_CircleActionPerformed
+
+    private void SquareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SquareActionPerformed
+        // TODO add your handling code here:
+        if (Square.isSelected()) {
+            style = 2;
+            repaint();
+        }
+    }//GEN-LAST:event_SquareActionPerformed
+
+    private void CrossActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrossActionPerformed
+        // TODO add your handling code here:
+        if (Cross.isSelected()) {
+            style = 4;
+            repaint();
+        }
+    }//GEN-LAST:event_CrossActionPerformed
+
+    private void PlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlusActionPerformed
+        // TODO add your handling code here:
+        if (Plus.isSelected()) {
+            style = 3;
+            repaint();
+        }
+    }//GEN-LAST:event_PlusActionPerformed
+
+    private void TriangleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TriangleActionPerformed
+        // TODO add your handling code here:
+        if (Triangle.isSelected()) {
+            style = 5;
+            repaint();
+        }
+    }//GEN-LAST:event_TriangleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1062,18 +1243,24 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
     private javax.swing.JRadioButton AddV;
     private javax.swing.JRadioButton AnimateR;
     private javax.swing.JButton Back;
+    private javax.swing.JRadioButton Circle;
+    private javax.swing.JRadioButton Cross;
     private javax.swing.JRadioButton DeleteE;
     private javax.swing.JRadioButton DeleteV;
     private javax.swing.JPanel GraphPanel;
     private javax.swing.JLabel Label;
     private javax.swing.JRadioButton ModifyE;
     private javax.swing.JRadioButton ModifyV;
+    private javax.swing.JRadioButton Plus;
     private javax.swing.JRadioButton ShortPath;
+    private javax.swing.JRadioButton Square;
+    private javax.swing.JRadioButton Triangle;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
 
 }
