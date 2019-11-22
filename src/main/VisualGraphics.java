@@ -10,10 +10,15 @@ import java.awt.Graphics2D;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import static java.lang.Thread.sleep;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static main.VisualGraphics.anim;
+import static main.VisualGraphics.ax;
+import static main.VisualGraphics.ay;
 
 /**
  *
@@ -39,28 +44,6 @@ class visual extends JPanel {
                 gg.setColor(Color.red);
 //                if(OOM.G.getEdges().get(B).contains(A.getName()))
                 gg.drawLine(x, y, x1, y1);
-
-//                int dx = x1 - x, dy = y1 - y;
-//                double d = 6.5;
-//                double h=6.5;
-//                int a=(x+x1)/2;
-//                int b=(y+y1)/2;
-//                double D = Math.sqrt(dx * dx + dy * dy);
-//                double xm = D - d, xn = xm, ym = h, yn = -h, xx;
-//                double sin = dy / D, cos = dx / D;
-//
-//                xx = xm * cos - ym * sin + x;
-//                ym = xm * sin + ym * cos + y;
-//                xm = xx;
-//
-//                xx = xn * cos - yn * sin + x;
-//                yn = xn * sin + yn * cos + y;
-//                xn = xx;
-//
-//                int[] xpoints = {a, (int) xm, (int) xn};
-//                int[] ypoints = {b, (int) ym, (int) yn};
-//                g.setColor(Color.green);
-//                g.fillPolygon(xpoints, ypoints, 3);
             }
         }
         gg.setStroke(new BasicStroke(3));
@@ -113,10 +96,34 @@ class visual extends JPanel {
 
             }
         }
+        if (anim == 1) {
+            gg.setColor(Color.green);
+            gg.setStroke(new BasicStroke(2));
+            gg.fillOval(ax - 6, ay - 6, 12, 12);
+        }
     }
 }
 
-public class VisualGraphics extends javax.swing.JFrame {
+class P {
+
+    int x;
+    int y;
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    P(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+public class VisualGraphics extends javax.swing.JFrame implements Runnable {
 
     /**
      * Creates new form VisualGraphics
@@ -129,6 +136,9 @@ public class VisualGraphics extends javax.swing.JFrame {
     static int choice = 5;
     static Vertex From = null;
     static Vertex To = null;
+    static int anim = 0;
+    static ArrayList<P> k = new ArrayList<P>();
+    static ArrayList<P> hg = new ArrayList<P>();
 
     public VisualGraphics() {
         initComponents();
@@ -155,6 +165,8 @@ public class VisualGraphics extends javax.swing.JFrame {
         DeleteE = new javax.swing.JRadioButton();
         ShortPath = new javax.swing.JRadioButton();
         Back = new javax.swing.JButton();
+        AnimateR = new javax.swing.JRadioButton();
+        jSeparator1 = new javax.swing.JSeparator();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -336,6 +348,23 @@ public class VisualGraphics extends javax.swing.JFrame {
             }
         });
 
+        AnimateR.setBackground(java.awt.Color.gray);
+        AnimateR.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        AnimateR.setText("Animation");
+        AnimateR.setToolTipText("Click On BUtton to Animate Your Path");
+        AnimateR.setBorder(null);
+        AnimateR.setBorderPainted(true);
+        AnimateR.setContentAreaFilled(false);
+        AnimateR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AnimateR.setEnabled(false);
+        AnimateR.setFocusPainted(false);
+        AnimateR.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        AnimateR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AnimateRActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -356,9 +385,14 @@ public class VisualGraphics extends javax.swing.JFrame {
                         .addComponent(ShortPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(46, 46, 46)
                 .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(AnimateR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jSeparator1)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,9 +411,13 @@ public class VisualGraphics extends javax.swing.JFrame {
                 .addComponent(ModifyE, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ShortPath, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(AnimateR, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addGap(94, 94, 94)
                 .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(372, 372, 372))
+                .addGap(232, 232, 232))
         );
 
         jMenu1.setText("File");
@@ -411,7 +449,7 @@ public class VisualGraphics extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(GraphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -423,6 +461,9 @@ public class VisualGraphics extends javax.swing.JFrame {
 
     private void GraphPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphPanelMouseClicked
         // TODO add your handling code here:
+        AnimateR.setSelected(false);
+        anim = 0;
+        AnimateR.setEnabled(false);
         if (choice == 1) { //AddVertex
             int x = evt.getX();
 
@@ -554,6 +595,13 @@ public class VisualGraphics extends javax.swing.JFrame {
             }
         } else if (choice == 7)//Short Path
         {
+            if (h != null) {
+                h.interrupt();
+            }
+            anim = 0;
+
+            AnimateR.setSelected(false);
+            AnimateR.setEnabled(false);
             System.out.println("IN Short Path");
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
             try {
@@ -569,9 +617,12 @@ public class VisualGraphics extends javax.swing.JFrame {
                         }
 
                         repaint();
+                        AnimateR.setEnabled(true);
                     } catch (FileNotFoundException ex) {
                         From = null;
                         To = null;
+                        AnimateR.setSelected(false);
+                        AnimateR.setEnabled(false);
                         JOptionPane.showMessageDialog(null, "Some Error Occured");
                     } catch (Invalid ee) {
                         From = null;
@@ -581,6 +632,8 @@ public class VisualGraphics extends javax.swing.JFrame {
                 } else {
                     From = V1;
                     To = null;
+                    AnimateR.setSelected(false);
+                    AnimateR.setEnabled(false);
                 }
                 System.out.println(From + " " + V1);
                 repaint();
@@ -606,12 +659,24 @@ public class VisualGraphics extends javax.swing.JFrame {
         G1.add(ModifyE);
         G1.add(ModifyV);
         G1.add(ShortPath);
-
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
+        AnimateR.setSelected(false);
+        anim = 0;
+        AnimateR.setEnabled(false);
         repaint();
     }//GEN-LAST:event_formWindowOpened
 
     private void GraphPanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphPanelMouseDragged
         // TODO add your handling code here:
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
         if (choice == 3) { //ModifyVertex
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
             try {
@@ -630,6 +695,12 @@ public class VisualGraphics extends javax.swing.JFrame {
 
     private void GraphPanelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphPanelMouseReleased
         // TODO add your handling code here:
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
         if (choice == 3) { //Modify Vertex
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
             try {
@@ -651,6 +722,12 @@ public class VisualGraphics extends javax.swing.JFrame {
 
     private void GraphPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphPanelMousePressed
         // TODO add your handling code here:
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
         if (choice == 3) { //ModifyVertex
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
             try {
@@ -664,6 +741,13 @@ public class VisualGraphics extends javax.swing.JFrame {
 
     private void ModifyEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifyEActionPerformed
         // TODO add your handling code here:
+
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
         if (ModifyE.isSelected()) {
             Label.setText("Modify Edge By Selecting FromVertex and To Vertex");
             choice = 6;
@@ -680,6 +764,12 @@ public class VisualGraphics extends javax.swing.JFrame {
 
     private void AddVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddVActionPerformed
         // TODO add your handling code here:
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
         if (AddV.isSelected()) {
             Label.setText("Add Vertex By Clicking on the Panel");
             choice = 1;
@@ -695,6 +785,12 @@ public class VisualGraphics extends javax.swing.JFrame {
 
     private void DeleteVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteVActionPerformed
         // TODO add your handling code here:
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
         if (DeleteV.isSelected()) {
             Label.setText("Delete Vertex By Clicking on the Vertex");
             choice = 4;
@@ -704,12 +800,19 @@ public class VisualGraphics extends javax.swing.JFrame {
             Label.setText("Please Select An Operation from Menu");
             choice = 0;
         }
+
         repaint();
 
     }//GEN-LAST:event_DeleteVActionPerformed
 
     private void ModifyVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifyVActionPerformed
         // TODO add your handling code here:
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
         if (ModifyV.isSelected()) {
             Label.setText("Modify Vertex By Dragging Vertex");
             choice = 3;
@@ -721,11 +824,19 @@ public class VisualGraphics extends javax.swing.JFrame {
             choice = 0;
             repaint();
         }
+//        AnimateR.setSelected(false);
+//        AnimateR.setEnabled(false);
 
     }//GEN-LAST:event_ModifyVActionPerformed
 
     private void AddEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddEActionPerformed
         // TODO add your handling code here:
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
         if (AddE.isSelected()) {
             Label.setText("Add Edge By Selecting FromVertex & ToVertex");
             choice = 2;
@@ -737,10 +848,18 @@ public class VisualGraphics extends javax.swing.JFrame {
             choice = 0;
             repaint();
         }
+//        AnimateR.setSelected(false);
+//        AnimateR.setEnabled(false);
     }//GEN-LAST:event_AddEActionPerformed
 
     private void DeleteEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteEActionPerformed
         // TODO add your handling code here:
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
         if (DeleteE.isSelected()) {
             Label.setText("Delete Edge By Selecting FromVertex & ToVertex");
             choice = 5;
@@ -752,10 +871,18 @@ public class VisualGraphics extends javax.swing.JFrame {
             choice = 0;
             repaint();
         }
+//        AnimateR.setSelected(false);
+//        AnimateR.setEnabled(false);
     }//GEN-LAST:event_DeleteEActionPerformed
 
     private void ShortPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShortPathActionPerformed
         // TODO add your handling code here:
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
         if (ShortPath.isSelected()) {
             Label.setText("Select From Vertex & To Vertex");
             choice = 7;
@@ -767,17 +894,132 @@ public class VisualGraphics extends javax.swing.JFrame {
             choice = 0;
             repaint();
         }
+//        AnimateR.setSelected(false);
+//        AnimateR.setEnabled(false);
     }//GEN-LAST:event_ShortPathActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        AnimateR.setSelected(false);
+        AnimateR.setEnabled(false);
+        if (h != null) {
+            h.interrupt();
+        }
+        anim = 0;
+        anim = 0;
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         // TODO add your handling code here:
+        anim = 0;
         this.dispose();
     }//GEN-LAST:event_BackActionPerformed
+    public Thread h = null;
+    static int ax = 0;
+    static int ay = 0;
+//    visual GraphPanel;
+
+    @Override
+    public void run() {
+//        initComponents();
+        System.out.println(" I am Called");
+        System.out.println(this);
+        while (anim == 1) {
+            for (P A : hg) {
+
+//                System.out.println("I amin " + x + "  ; " + y);
+                ax = A.getX();
+                ay = A.getY();
+                repaint();
+
+//            System.out.println("I amin " + ax + "  ; " + ay);
+                try {
+                    sleep((long) 20);
+                    if (anim == 0) {
+                        Thread.currentThread().interrupt();
+                    }
+                } catch (InterruptedException ex) {
+                    System.out.print("Thread is Dead Now");
+                    return;
+                }
+
+            }
+        }
+
+    }
+    private void AnimateRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnimateRActionPerformed
+        // TODO add your handling code here:
+        if (AnimateR.isSelected()) {
+            k = new ArrayList<P>();
+            int ss = (int) Math.random() * 100;
+            Label.setText("No Mouse Operation is Possible on Below Panel" + ss);
+            File file = new File("/home/harsh/NetBeansProjects/OOM/src/main/Path");
+            try {
+                Scanner scan = new Scanner(file);
+                String s = scan.nextLine();
+                s = s.substring(0, s.length() - 1);
+                String[] inputs = s.split("-->");
+
+                if (inputs.length > 1) {
+                    for (int i = 0; i < inputs.length; i++) {
+                        if (!(OOM.G.getVert().containsKey(inputs[i]))) {
+                            break;
+                        }
+
+                        int x = OOM.G.getVert().get(inputs[i]).getX();
+                        int y = OOM.G.getVert().get(inputs[i]).getY();
+//                            gg.setStroke(new BasicStroke(1.0f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,10.0f, 10.0, 0.0f));
+
+//final static float dash1[] = {10.0f}
+                        k.add(new P(x, y));
+
+                    }
+                }
+
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "Some Error Occured");
+            }
+            hg = new ArrayList<P>();
+            for (int i = 0; i < k.size() - 1; i++) {
+                int a = k.get(i + 1).getX();
+                int b = k.get(i + 1).getY();
+                int x = k.get(i).getX();
+                int y = k.get(i).getY();
+                hg.add(new P(x, y));
+                int dis = (a - x) * (a - x) + (b - y) * (b - y);
+                dis = (int) Math.sqrt(dis);
+                for (int j = 1; j < dis; j++) {
+                    int xa = ((dis - j) * x + (j) * a) / dis;
+                    int ya = ((dis - j) * y + (j) * b) / dis;
+                    hg.add(new P(xa, ya));
+                }
+                hg.add(new P(a, b));
+            }
+            anim = 1;
+//            GraphPanel.repaint();
+            System.out.println("sdafds" + this);
+            h = new Thread(this);
+            h.start();
+
+        } else if (!AnimateR.isSelected()) {
+            Label.setText("Select From Vertex & To Vertex");
+            if (h != null) {
+                h.interrupt();
+            }
+            anim = 0;
+            AnimateR.setSelected(false);
+            AnimateR.setEnabled(false);
+            repaint();
+        } else if (!AnimateR.isEnabled()) {
+            if (h != null) {
+                h.interrupt();
+            }
+            AnimateR.setSelected(false);
+            AnimateR.setEnabled(false);
+            repaint();
+        }
+    }//GEN-LAST:event_AnimateRActionPerformed
 
     /**
      * @param args the command line arguments
@@ -818,6 +1060,7 @@ public class VisualGraphics extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton AddE;
     private javax.swing.JRadioButton AddV;
+    private javax.swing.JRadioButton AnimateR;
     private javax.swing.JButton Back;
     private javax.swing.JRadioButton DeleteE;
     private javax.swing.JRadioButton DeleteV;
@@ -830,5 +1073,7 @@ public class VisualGraphics extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
+
 }

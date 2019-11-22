@@ -93,7 +93,7 @@ public class Interactive extends javax.swing.JFrame implements Runnable {
         int b = k.get(1).y;
         int c = k.get(0).x;
         int d = k.get(0).y;
-        vis jPanel1;
+//        vis jPanel1;
 
         if (true) {
             choice = 1;
@@ -143,6 +143,7 @@ public class Interactive extends javax.swing.JFrame implements Runnable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        vis jPanel1;
         jPanel1 = new vis();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);

@@ -1,4 +1,6 @@
-A-->B-->C-->D-->V7.
-A-->B-->D-->V7.
-A-->C-->B-->D-->V7.
-A-->C-->D-->V7.
+E-->B-->A-->C.
+Cost:5main.Vertex@58f2a98 main.Vertex@32a3b744
+sdafdsmain.VisualGraphics[frame1,67,27,950x849,invalid,layout=java.awt.BorderLayout,title=,resizable,normal,defaultCloseOperation=DISPOSE_ON_CLOSE,rootPane=javax.swing.JRootPane[,0,30,950x819,invalid,layout=javax.swing.JRootPane$RootLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=16777673,maximumSize=,minimumSize=,preferredSize=],rootPaneCheckingEnabled=true]
+ I am Called
+main.VisualGraphics[frame1,67,27,950x849,invalid,layout=java.awt.BorderLayout,title=,resizable,normal,defaultCloseOperation=DISPOSE_ON_CLOSE,rootPane=javax.swing.JRootPane[,0,30,950x819,invalid,layout=javax.swing.JRootPane$RootLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=16777673,maximumSize=,minimumSize=,preferredSize=],rootPaneCheckingEnabled=true]
+Thread is Dead Now
