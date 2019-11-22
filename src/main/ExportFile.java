@@ -50,7 +50,7 @@ public class ExportFile extends javax.swing.JFrame {
             }
         });
 
-        File.setText("/home/harsh/NetBeansProjects/OOM/src/main/ouput");
+        File.setText("/home/harsh/NetBeansProjects/OOM/src/main/output");
         File.setToolTipText("");
         File.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -76,7 +76,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="File">
       <Properties>
-        <Property name="text" type="java.lang.String" value="/home/harsh/NetBeansProjects/OOM/src/main/ouput"/>
+        <Property name="text" type="java.lang.String" value="/home/harsh/NetBeansProjects/OOM/src/main/output"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>

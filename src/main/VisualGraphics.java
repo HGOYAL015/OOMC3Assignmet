@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -62,10 +63,10 @@ class visual extends JPanel {
         }
         g.setColor(Color.red);
         if (VisualGraphics.From != null) {
-            if (VisualGraphics.choice == 1) {
+            if (VisualGraphics.choice == 2 || VisualGraphics.choice == 6) {
                 g.drawOval(VisualGraphics.From.getX() - 15, VisualGraphics.From.getY() - 15, 30, 30);
             }
-            if (VisualGraphics.choice == 2) {
+            if (VisualGraphics.choice == 3 || VisualGraphics.choice == 5) {
                 g.setColor(Color.BLUE);
                 g.drawOval(VisualGraphics.From.getX() - 15, VisualGraphics.From.getY() - 15, 30, 30);
             }
@@ -78,7 +79,12 @@ public class VisualGraphics extends javax.swing.JFrame {
     /**
      * Creates new form VisualGraphics
      */
-    static int choice = 1;
+//    choice=1 //AddVertex
+//    choice=2 //AddEdge
+//    choice=3 //ModifyVertex
+//    choice=4 //DeleteVertex
+//    choice=5 //DeleteEdge
+    static int choice = 5;
     static Vertex From = null;
     static Vertex To = null;
 
@@ -97,7 +103,14 @@ public class VisualGraphics extends javax.swing.JFrame {
 
         visual GraphPanel;
         GraphPanel = new visual();
+        Label = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        AddV = new javax.swing.JRadioButton();
+        DeleteV = new javax.swing.JRadioButton();
+        ModifyV = new javax.swing.JRadioButton();
+        AddE = new javax.swing.JRadioButton();
+        ModifyE = new javax.swing.JRadioButton();
+        DeleteE = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -124,28 +137,159 @@ public class VisualGraphics extends javax.swing.JFrame {
             }
         });
 
+        Label.setFont(new java.awt.Font("Purisa", 3, 20)); // NOI18N
+        Label.setForeground(new java.awt.Color(243, 12, 12));
+        Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Label.setText("Add Vertex By Clicking on The Panel");
+        Label.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout GraphPanelLayout = new javax.swing.GroupLayout(GraphPanel);
         GraphPanel.setLayout(GraphPanelLayout);
         GraphPanelLayout.setHorizontalGroup(
             GraphPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 629, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GraphPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Label, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                .addContainerGap())
         );
         GraphPanelLayout.setVerticalGroup(
             GraphPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(GraphPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Label)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel2.setBackground(java.awt.Color.gray);
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        AddV.setBackground(java.awt.Color.gray);
+        AddV.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        AddV.setSelected(true);
+        AddV.setText("AddVertex");
+        AddV.setBorder(null);
+        AddV.setBorderPainted(true);
+        AddV.setContentAreaFilled(false);
+        AddV.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AddV.setFocusPainted(false);
+        AddV.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        AddV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddVActionPerformed(evt);
+            }
+        });
+
+        DeleteV.setBackground(java.awt.Color.gray);
+        DeleteV.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        DeleteV.setText("RemoveVertex");
+        DeleteV.setToolTipText("RemoveVertex");
+        DeleteV.setBorder(null);
+        DeleteV.setBorderPainted(true);
+        DeleteV.setContentAreaFilled(false);
+        DeleteV.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DeleteV.setFocusPainted(false);
+        DeleteV.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        DeleteV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteVActionPerformed(evt);
+            }
+        });
+
+        ModifyV.setBackground(java.awt.Color.gray);
+        ModifyV.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        ModifyV.setText("Modify Vertex");
+        ModifyV.setToolTipText("ModifyVertex");
+        ModifyV.setBorder(null);
+        ModifyV.setBorderPainted(true);
+        ModifyV.setContentAreaFilled(false);
+        ModifyV.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ModifyV.setFocusPainted(false);
+        ModifyV.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ModifyV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModifyVActionPerformed(evt);
+            }
+        });
+
+        AddE.setBackground(java.awt.Color.gray);
+        AddE.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        AddE.setText("Add Edge");
+        AddE.setToolTipText("AddEdge");
+        AddE.setBorder(null);
+        AddE.setBorderPainted(true);
+        AddE.setContentAreaFilled(false);
+        AddE.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AddE.setFocusPainted(false);
+        AddE.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        AddE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddEActionPerformed(evt);
+            }
+        });
+
+        ModifyE.setBackground(java.awt.Color.gray);
+        ModifyE.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        ModifyE.setText("Modify Edge");
+        ModifyE.setToolTipText("ModifyEdge");
+        ModifyE.setBorder(null);
+        ModifyE.setBorderPainted(true);
+        ModifyE.setContentAreaFilled(false);
+        ModifyE.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ModifyE.setFocusPainted(false);
+        ModifyE.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ModifyE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModifyEActionPerformed(evt);
+            }
+        });
+
+        DeleteE.setBackground(java.awt.Color.gray);
+        DeleteE.setFont(new java.awt.Font("Serif", 1, 15)); // NOI18N
+        DeleteE.setText("Remove Edge");
+        DeleteE.setToolTipText("Remove Edge");
+        DeleteE.setBorder(null);
+        DeleteE.setBorderPainted(true);
+        DeleteE.setContentAreaFilled(false);
+        DeleteE.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DeleteE.setFocusPainted(false);
+        DeleteE.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        DeleteE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteEActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 281, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ModifyE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DeleteE, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AddE, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ModifyV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AddV, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DeleteV, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(AddV, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(DeleteV, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ModifyV, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(AddE, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(DeleteE, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ModifyE, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addGap(476, 476, 476))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,9 +298,9 @@ public class VisualGraphics extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(GraphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(GraphPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -174,7 +318,7 @@ public class VisualGraphics extends javax.swing.JFrame {
 
     private void GraphPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphPanelMouseClicked
         // TODO add your handling code here:
-        if (choice == 0) { //AddVertex
+        if (choice == 1) { //AddVertex
             int x = evt.getX();
 
             int y = evt.getY();
@@ -189,7 +333,7 @@ public class VisualGraphics extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
 
-        } else if (choice == 1) { //AddEdge
+        } else if (choice == 2) { //AddEdge
             System.out.println("IN Add Edge");
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
             try {
@@ -218,18 +362,114 @@ public class VisualGraphics extends javax.swing.JFrame {
                 repaint();
 
             }
+        } else if (choice == 4) { //Delete Vertex
+            Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
+            try {
+                V1 = OOM.G.searchVertex(V1.getX(), V1.getY());
+                int input = JOptionPane.showConfirmDialog(null, "Do you want to Delete this Vertex");
+                if (input == 0) {
+                    OOM.G.deleteVertex(V1);
+                    repaint();
+                } else {
+                    JOptionPane.showMessageDialog(null, "You Cancelled Delete Operation");
+                    repaint();
+                }
+            } catch (Invalid e) {
+                repaint();
+            }
+        } else if (choice == 5) { //Delete Edge
+            System.out.println("IN Delete Edge");
+            Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
+            try {
+                V1 = OOM.G.searchVertex(V1.getX(), V1.getY());
+                if (From != null) {
+                    try {
+                        OOM.G.checkEdge(From.getName(), V1.getName());
+                        From = null;
+                    } catch (Invalid e) {
+                        int input = JOptionPane.showConfirmDialog(null, "Do you want to Delete this Edge");
+                        if (input == 0) {
+                            OOM.G.deleteEdge(From.getName(), V1.getName());
+                            From = null;
+                            repaint();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "You Cancelled Delete Operation");
+                            From = null;
+                            repaint();
+                        }
+                    }
+                } else {
+                    From = V1;
+                }
+                System.out.println(From + " " + V1);
+                repaint();
+            } catch (Invalid e) {
+                From = null;
+                repaint();
+
+            }
+        } else if (choice == 6) {
+            System.out.println("IN Modify Edge");
+            Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
+            try {
+                V1 = OOM.G.searchVertex(V1.getX(), V1.getY());
+                if (From != null) {
+                    try {
+                        OOM.G.checkEdge(From.getName(), V1.getName());
+                        From = null;
+                    } catch (Invalid e) {
+                        int input = JOptionPane.showConfirmDialog(null, "Do you want to Modify this Edge");
+                        if (input == 0) {
+                            String f = JOptionPane.showInputDialog("Please Provide new Weight for this edge");
+                            try {
+                                double h = Double.parseDouble(f);
+                                OOM.G.deleteEdge(From.getName(), V1.getName());
+                                OOM.G.addEdge(From.getName(), V1.getName(),h);
+
+                            } catch (Exception re) {
+                                JOptionPane.showMessageDialog(null, "Enter weight in number");
+                            }
+
+                            From = null;
+                            repaint();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "You Cancelled Modify Operation");
+                            From = null;
+                            repaint();
+                        }
+                    }
+                } else {
+                    From = V1;
+                }
+                System.out.println(From + " " + V1);
+                repaint();
+            } catch (Invalid e) {
+                From = null;
+                repaint();
+            }
+
         }
 
     }//GEN-LAST:event_GraphPanelMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+        choice = 1;
+        ButtonGroup G1;
+        G1 = new ButtonGroup();
+        G1.add(AddE);
+        G1.add(AddV);
+        G1.add(DeleteE);
+        G1.add(DeleteV);
+        G1.add(ModifyE);
+        G1.add(ModifyV);
+
         repaint();
     }//GEN-LAST:event_formWindowOpened
 
     private void GraphPanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphPanelMouseDragged
         // TODO add your handling code here:
-        if (choice == 2) {
+        if (choice == 3) { //ModifyVertex
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
             try {
                 OOM.G.searchVertex(V1.getX(), V1.getY());
@@ -247,7 +487,7 @@ public class VisualGraphics extends javax.swing.JFrame {
 
     private void GraphPanelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphPanelMouseReleased
         // TODO add your handling code here:
-        if (choice == 2) {
+        if (choice == 3) { //Modify Vertex
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
             try {
                 OOM.G.searchVertex(V1.getX(), V1.getY());
@@ -268,7 +508,7 @@ public class VisualGraphics extends javax.swing.JFrame {
 
     private void GraphPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphPanelMousePressed
         // TODO add your handling code here:
-        if (choice == 2) {
+        if (choice == 3) { //ModifyVertex
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
             try {
                 V1 = OOM.G.searchVertex(V1.getX(), V1.getY());
@@ -278,6 +518,62 @@ public class VisualGraphics extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_GraphPanelMousePressed
+
+    private void ModifyEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifyEActionPerformed
+        // TODO add your handling code here:
+        if (ModifyE.isSelected()) {
+            Label.setText("Modify Edge By Selecting FromVertex and To Vertex");
+            choice = 6;
+        }
+
+    }//GEN-LAST:event_ModifyEActionPerformed
+
+    private void AddVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddVActionPerformed
+        // TODO add your handling code here:
+        if (AddV.isSelected()) {
+            Label.setText("Add Vertex By Clicking on the Panel");
+            choice = 1;
+            repaint();
+        }
+    }//GEN-LAST:event_AddVActionPerformed
+
+    private void DeleteVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteVActionPerformed
+        // TODO add your handling code here:
+        if (DeleteV.isSelected()) {
+            Label.setText("Delete Vertex By Clicking on the Vertex");
+            choice = 4;
+        }
+        repaint();
+
+    }//GEN-LAST:event_DeleteVActionPerformed
+
+    private void ModifyVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifyVActionPerformed
+        // TODO add your handling code here:
+        if (ModifyV.isSelected()) {
+            Label.setText("Modify Vertex By Dragging Vertex");
+            choice = 3;
+            repaint();
+        }
+
+    }//GEN-LAST:event_ModifyVActionPerformed
+
+    private void AddEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddEActionPerformed
+        // TODO add your handling code here:
+        if (AddE.isSelected()) {
+            Label.setText("Add Edge By Selecting FromVertex & ToVertex");
+            choice = 2;
+            repaint();
+        }
+    }//GEN-LAST:event_AddEActionPerformed
+
+    private void DeleteEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteEActionPerformed
+        // TODO add your handling code here:
+        if (DeleteE.isSelected()) {
+            Label.setText("Delete Edge By Selecting FromVertex & ToVertex");
+            choice = 5;
+            repaint();
+        }
+    }//GEN-LAST:event_DeleteEActionPerformed
 
     /**
      * @param args the command line arguments
@@ -310,12 +606,20 @@ public class VisualGraphics extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VisualGraphics().setVisible(true);
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton AddE;
+    private javax.swing.JRadioButton AddV;
+    private javax.swing.JRadioButton DeleteE;
+    private javax.swing.JRadioButton DeleteV;
     private javax.swing.JPanel GraphPanel;
+    private javax.swing.JLabel Label;
+    private javax.swing.JRadioButton ModifyE;
+    private javax.swing.JRadioButton ModifyV;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
