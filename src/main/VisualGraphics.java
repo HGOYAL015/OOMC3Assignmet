@@ -25,9 +25,10 @@ class visual extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D gg = (Graphics2D) g;
+        gg.setStroke(new BasicStroke((float) 1.2));
         for (Vertex A : OOM.G.getV()) {
-            g.setColor(Color.black);
-            g.fillOval(A.getX() - 12, A.getY() - 12, 24, 24);
+            gg.setColor(Color.black);
+            gg.fillOval(A.getX() - 12, A.getY() - 12, 24, 24);
         }
         for (Vertex A : OOM.G.getV()) {
             int x = A.getX();
@@ -35,9 +36,9 @@ class visual extends JPanel {
             for (String B : OOM.G.getEdges().get(A.getName())) {
                 int x1 = OOM.G.getVert().get(B).getX();
                 int y1 = OOM.G.getVert().get(B).getY();
-                g.setColor(Color.red);
+                gg.setColor(Color.red);
 //                if(OOM.G.getEdges().get(B).contains(A.getName()))
-                g.drawLine(x, y, x1, y1);
+                gg.drawLine(x, y, x1, y1);
 
 //                int dx = x1 - x, dy = y1 - y;
 //                double d = 6.5;
@@ -62,18 +63,19 @@ class visual extends JPanel {
 //                g.fillPolygon(xpoints, ypoints, 3);
             }
         }
-        g.setColor(Color.red);
+        gg.setStroke(new BasicStroke(3));
+        gg.setColor(Color.red);
         if (VisualGraphics.From != null) {
             if (VisualGraphics.choice == 2 || VisualGraphics.choice == 6) {
-                g.drawOval(VisualGraphics.From.getX() - 15, VisualGraphics.From.getY() - 15, 30, 30);
+                gg.drawOval(VisualGraphics.From.getX() - 15, VisualGraphics.From.getY() - 15, 30, 30);
             }
             if (VisualGraphics.choice == 3 || VisualGraphics.choice == 5) {
-                g.setColor(Color.BLUE);
-                g.drawOval(VisualGraphics.From.getX() - 15, VisualGraphics.From.getY() - 15, 30, 30);
+                gg.setColor(Color.BLUE);
+                gg.drawOval(VisualGraphics.From.getX() - 15, VisualGraphics.From.getY() - 15, 30, 30);
             }
             if (VisualGraphics.choice == 7) {
-                g.setColor(Color.ORANGE);
-                g.drawOval(VisualGraphics.From.getX() - 15, VisualGraphics.From.getY() - 15, 30, 30);
+                gg.setColor(Color.ORANGE);
+                gg.drawOval(VisualGraphics.From.getX() - 15, VisualGraphics.From.getY() - 15, 30, 30);
             }
         }
         if (VisualGraphics.To != null) {
@@ -84,9 +86,9 @@ class visual extends JPanel {
                     String s = scan.nextLine();
                     s = s.substring(0, s.length() - 1);
                     String[] inputs = s.split("-->");
-                    g.setColor(Color.red);
-                    g.drawOval(VisualGraphics.To.getX() - 15, VisualGraphics.To.getY() - 15, 30, 30);
-                    g.setColor(Color.green);
+                    gg.setColor(Color.red);
+                    gg.drawOval(VisualGraphics.To.getX() - 15, VisualGraphics.To.getY() - 15, 30, 30);
+                    gg.setColor(Color.green);
                     if (inputs.length > 1) {
                         for (int i = 0; i < inputs.length - 1; i++) {
                             if (!(OOM.G.getVert().containsKey(inputs[i]) && OOM.G.getVert().containsKey(inputs[i + 1]))) {
@@ -100,7 +102,6 @@ class visual extends JPanel {
 //                            gg.setStroke(new BasicStroke(1.0f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,10.0f, 10.0, 0.0f));
 
 //final static float dash1[] = {10.0f}
-gg.setStroke(new BasicStroke(3));
                             gg.drawLine(x, y, x1, y1);
 
                         }
@@ -669,6 +670,10 @@ public class VisualGraphics extends javax.swing.JFrame {
             From = null;
             To = null;
             repaint();
+        } else {
+            Label.setText("Please Select An Operation from Menu");
+            choice = 0;
+            repaint();
         }
 
     }//GEN-LAST:event_ModifyEActionPerformed
@@ -681,6 +686,10 @@ public class VisualGraphics extends javax.swing.JFrame {
             From = null;
             To = null;
             repaint();
+        } else {
+            Label.setText("Please Select An Operation from Menu");
+            choice = 0;
+            repaint();
         }
     }//GEN-LAST:event_AddVActionPerformed
 
@@ -691,6 +700,9 @@ public class VisualGraphics extends javax.swing.JFrame {
             choice = 4;
             From = null;
             To = null;
+        } else {
+            Label.setText("Please Select An Operation from Menu");
+            choice = 0;
         }
         repaint();
 
@@ -704,6 +716,10 @@ public class VisualGraphics extends javax.swing.JFrame {
             From = null;
             To = null;
             repaint();
+        } else {
+            Label.setText("Please Select An Operation from Menu");
+            choice = 0;
+            repaint();
         }
 
     }//GEN-LAST:event_ModifyVActionPerformed
@@ -716,6 +732,10 @@ public class VisualGraphics extends javax.swing.JFrame {
             From = null;
             To = null;
             repaint();
+        } else {
+            Label.setText("Please Select An Operation from Menu");
+            choice = 0;
+            repaint();
         }
     }//GEN-LAST:event_AddEActionPerformed
 
@@ -727,6 +747,10 @@ public class VisualGraphics extends javax.swing.JFrame {
             From = null;
             To = null;
             repaint();
+        } else {
+            Label.setText("Please Select An Operation from Menu");
+            choice = 0;
+            repaint();
         }
     }//GEN-LAST:event_DeleteEActionPerformed
 
@@ -737,6 +761,10 @@ public class VisualGraphics extends javax.swing.JFrame {
             choice = 7;
             From = null;
             To = null;
+            repaint();
+        } else {
+            Label.setText("Please Select An Operation from Menu");
+            choice = 0;
             repaint();
         }
     }//GEN-LAST:event_ShortPathActionPerformed

@@ -5,46 +5,132 @@
  */
 package main;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import static java.lang.System.exit;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import static main.Interactive.choice;
+import static main.Interactive.k;
+import static main.Interactive.m;
+import static main.Interactive.x;
+import static main.Interactive.y;
 
 /**
  *
  * @author harsh
  */
-public class Interactive extends javax.swing.JFrame {
+class p {
 
-    int x, y;
-    public ArrayList<Integer> k = new ArrayList<Integer>();
-    public ArrayList<Integer> k1 = new ArrayList<Integer>();
-    int count = 0;
-    int Cx;
-    int Cy;
+    int x;
+    int y;
 
-    public void paint(Graphics g) {
-//        super.paintComponents(g);
-System.out.println("Inside paint "+count);
-        if (count == 1) {
-            g.setColor(Color.black);
-            g.drawLine(x,y,Cx,Cy);
-            count=0;
-            
-        } else {
-            g.setColor(Color.black);
-            g.fillOval(x - 8, y - 8, 16, 16);
+    public int getX() {
+        return x;
+    }
 
-            g.drawOval(x - 8, y - 8, 16, 16);
+    public int getY() {
+        return y;
+    }
+
+    p(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class vis extends JPanel {
+
+    public void paintComponent(Graphics g) {
+//        System.out.println("I have Been Called");
+        super.paintComponent(g);
+        Graphics2D gg = (Graphics2D) g;
+        if (Interactive.k.size() >= 2) {
+            gg.drawLine((int) k.get(0).getX(), (int) k.get(0).getY(), (int) k.get(1).getX(), (int) k.get(1).getY());
+        }
+
+        gg.setStroke(new BasicStroke(3));
+        if (Interactive.choice == 1 && Interactive.k.size() >= 2) {
+//            System.out.println("lets have fun");
+            int xx = Interactive.x;
+            int yy = Interactive.y;
+            gg.setColor(Color.green);
+            gg.fillOval(xx - 8, yy - 8, 16, 16);
+
         }
 
     }
 
+//        repaint();
+}
+
+public class Interactive extends javax.swing.JFrame implements Runnable {
+
+    static ArrayList<p> k = new ArrayList<p>();
+    static int choice = 0;
+    static int x, y;
+    static double m;
+    static double angle;
+    int length = 1;
+    static ArrayList<p> hg = new ArrayList<p>();
+
     /**
      * Creates new form Interactive
      */
+    @Override
+    public void run() {
+        initComponents();
+//        System.out.println("I am running");
+        int a = k.get(1).x;
+        int b = k.get(1).y;
+        int c = k.get(0).x;
+        int d = k.get(0).y;
+        vis jPanel1;
+
+        if (true) {
+            choice = 1;
+
+            for (p A : hg) {
+
+//                System.out.println("I amin " + x + "  ; " + y);
+//                System.out.println(this);
+                repaint();
+
+                length += 1;
+
+                x = A.getX();
+                y = A.getY();
+                System.out.println("I amin " + x + "  ; " + y);
+
+                try {
+                    sleep((long) 80);
+                } catch (InterruptedException ex) {
+                    System.out.print("Fuckoff");
+                    
+                    return ;
+                    
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    /**
+     *
+     */
     public Interactive() {
+        super();
+
         initComponents();
     }
 
@@ -57,40 +143,41 @@ System.out.println("Inside paint "+count);
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        label1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new vis();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                formMouseDragged(evt);
-            }
-        });
-        addMouseListener(new java.awt.event.MouseAdapter() {
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
+                jPanel1MouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                formMousePressed(evt);
+                jPanel1MousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                formMouseReleased(evt);
+                jPanel1MouseReleased(evt);
             }
         });
-
-        label1.setText("fuck");
-        label1.setToolTipText("");
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel1KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPanel1KeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 578, Short.MAX_VALUE)
+            .addGap(0, 693, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 258, Short.MAX_VALUE)
+            .addGap(0, 511, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -98,84 +185,88 @@ System.out.println("Inside paint "+count);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(212, 212, 212)
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGap(79, 79, 79)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(167, 167, 167)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99)
+                .addGap(65, 65, 65)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         // TODO add your handling code here:
-        System.out.println(evt.getX() + " in Pressed " + evt.getY());
-//        JTextArea ta=new JTextArea(2,2);
-//        JOptionPane.showInputDialog(null);
-
-    }//GEN-LAST:event_formMousePressed
-
-    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-        // TODO add your handling code here:
-        label1.setText("ADsf" + evt.getX());
-
-    }//GEN-LAST:event_formMouseDragged
-
-    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
-        // TODO add your handling code here:
-        System.out.println("dasfsd" + evt.getX() + " " + evt.getY());
-    }//GEN-LAST:event_formMouseReleased
-
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        System.out.println(evt.getX() + " " + " " + evt.getY() + " ");
-        x = evt.getX();
-
-        y = evt.getY();
-        int flag = 0;
-        for (int i = 0; i < k.size(); i++) {
-            Integer a = k.get(i);
-
-            Integer b = k1.get(i);
-            a = Math.abs(a - x);
-            b = Math.abs(b - y);
-            double ans = Math.sqrt(a * a + b * b);
-            if (ans <= 20) {
-                if (count == 0) {
-                    Cx = k.get(i);
-                    Cy = k1.get(i);
-                    count = 1;
-                }
-                else if (count == 1) {
-                    repaint();
-//                    count=0;
-                }
-//                JOptionPane.showMessageDialog(null, "Overrite");
-                flag = 1;
-                break;
-            }
-
+        p j;
+        if (k.size() < 2) {
+            j = new p(evt.getX(), evt.getY());
+            System.out.println(j.getX() + " " + j.getY());
+            k.add(j);
         }
-        if (flag == 0) {
-            count=0;
-            k.add(x);
-            k1.add(y);
-            repaint();
+        repaint();
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jPanel1KeyPressed
+
+    private void jPanel1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jPanel1KeyReleased
+    public Thread h = null;
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        // TODO add your handling code here:
+        if (k.size() < 2) {
+            return;
         }
-        System.out.println(count);
-    }//GEN-LAST:event_formMouseClicked
+        int a = k.get(1).x;
+        int b = k.get(1).y;
+        x = k.get(0).x;
+        y = k.get(0).y;
+        System.out.println("hii");
+//        m = ((a - x) / (b - y));
+//        angle = Math.atan(m);
+//        length = 1;
+        hg.add(new p(x, y));
+        int dis = (a - x) * (a - x) + (b - y) * (b - y);
+        dis = (int) Math.sqrt(dis);
+        for (int i = 1; i < dis; i++) {
+            int xa = ((dis - i) * x + (i) * a) / dis;
+            int ya = ((dis - i) * y + (i) * b) / dis;
+            hg.add(new p(xa, ya));
+        }
+        hg.add(new p(a, b));
+        for(p A:hg)
+            System.out.println(A.getX()+" "+A.getY());
+//        length = (int) Math.round(Math.sqrt(x * x + y * y));
+        h = new Thread(this);
+//        h.join();
+        System.out.println(jPanel1);
+
+        h.start();
+
+//        repaint();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased
+        // TODO add your handling code here:
+        if (h != null) {
+            h.interrupt();
+        }
+        if (k.size() >= 2) {
+            System.out.println("bye" + x + "   " + y + k.get(1).getX() + "   " + k.get(1).getY());
+        }
+//        h.interrupt();
+        choice = 0;
+        repaint();
+    }//GEN-LAST:event_jPanel1MouseReleased
 
     /**
      * @param args the command line arguments
@@ -214,6 +305,5 @@ System.out.println("Inside paint "+count);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel label1;
     // End of variables declaration//GEN-END:variables
 }
