@@ -7,6 +7,7 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import static java.lang.System.exit;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -101,7 +102,6 @@ public class ImportFile extends javax.swing.JFrame {
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please Fill all Fields");
         } else {
-            
 
             File file = new File(name);
             try {
@@ -124,15 +124,22 @@ public class ImportFile extends javax.swing.JFrame {
 //                            System.out.println(V + " Vertex is Added");
 
                         } catch (Invalid e) {
-//                    JOptionPane.showMessageDialog(null, e.getMessage());
+                            JOptionPane.showMessageDialog(null, e.getMessage());
+                            exit(0);
                             System.out.println(e.getMessage());
 
                         }
 
                     } catch (NumberFormatException e) {
-//                JOptionPane.showMessageDialog(null, "Please Enter Coordinates Correctly");
+
+                        JOptionPane.showMessageDialog(null, "Please Enter Coordinates Correctly");
+                        exit(0);
                         System.out.println(e.getMessage());
 
+                    }catch(ArrayIndexOutOfBoundsException ee){
+                        JOptionPane.showMessageDialog(null, "Please Provide Correct Vertex");
+                        System.out.println(ee.getMessage());
+                        exit(0);
                     }
                 }
                 int ne = scan.nextInt();
@@ -144,7 +151,7 @@ public class ImportFile extends javax.swing.JFrame {
                     String to = input[1];
                     String w = input[2];
                     if (from.equals(to)) {
-//                JOptionPane.showMessageDialog(null, "Please Enter FromVertex and ToVertex Different\n");
+                        JOptionPane.showMessageDialog(null, "Please Enter FromVertex and ToVertex Different\n");
                         System.out.println("Please Enter FromVertex and ToVertex Different\n");
 
                     } else {
@@ -158,11 +165,13 @@ public class ImportFile extends javax.swing.JFrame {
                             System.out.println("Adding Successfull");
 
                         } catch (NumberFormatException e) {
-//                    JOptionPane.showMessageDialog(null, "Please Enter the Correct Weight");
+                            JOptionPane.showMessageDialog(null, "Please Enter the Correct Weight");
+                            exit(0);
                             System.out.println("Please Enter the Correct Weight");
 
                         } catch (Invalid e) {
-//                    JOptionPane.showMessageDialog(null, e.getMessage());
+                            JOptionPane.showMessageDialog(null, e.getMessage());
+                            exit(0);
                             System.out.println(e.getMessage());
 
                         }
@@ -171,6 +180,7 @@ public class ImportFile extends javax.swing.JFrame {
                 this.dispose();
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "File Not Found");
+                exit(0);
             }
 
         }

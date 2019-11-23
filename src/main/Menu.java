@@ -43,6 +43,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         VisualMenu = new javax.swing.JMenu();
@@ -145,6 +146,15 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jCheckBoxMenuItem1.setText("Refresh");
+        jCheckBoxMenuItem1.setToolTipText("");
+        jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jCheckBoxMenuItem1);
 
         jMenuBar1.add(jMenu1);
 
@@ -306,6 +316,12 @@ public class Menu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_VisualMenuMouseClicked
 
+    private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        OOM.G=null;
+        OOM.G=new Graph();
+    }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -353,6 +369,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

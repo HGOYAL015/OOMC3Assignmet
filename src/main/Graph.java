@@ -78,10 +78,10 @@ public class Graph {
     public void addEdge(String from, String to, double Weight) {
 
         this.Edges.get(from).add(to);
-        this.Edges.get(to).add(from);
+//        this.Edges.get(to).add(from);
 
         this.WeightMap.put(from + "?" + to, Weight);
-        this.WeightMap.put(to + "?" + from, Weight);
+//        this.WeightMap.put(to + "?" + from, Weight);
 
         System.out.println(Edges);
 //        System.out.println(E);
@@ -91,15 +91,20 @@ public class Graph {
     public void deleteEdge(String from, String to) {
 
         this.Edges.get(from).remove(to);
-        this.Edges.get(to).remove(from);
+//        this.Edges.get(to).remove(from);
         WeightMap.remove(from + "?" + to);
-        WeightMap.remove(to + "?" + from);
+//        WeightMap.remove(to + "?" + from);
 
 //        System.out.println(WeightMap);
 //        System.out.println(E.get(g));
     }
 
     public void showEdges() {
+        int sum=0;
+        for(Vertex A:V){
+            sum+=Edges.get(A.getName()).size();
+        }
+        System.out.println(sum);
         sortVertex();
         for (Vertex A : V) {
 
@@ -118,6 +123,7 @@ public class Graph {
     }
 
     public void printVertex() {
+        System.out.println(V.size());
         for (Vertex A : V) {
             System.out.println(A.getName() + " " + Math.round(A.getX()) + " " + Math.round(A.getY()));
         }
@@ -142,7 +148,7 @@ public class Graph {
             a = Math.abs(a - e.getX());
             b = Math.abs(b - e.getY());
             int ans = (int) Math.round(Math.sqrt(a * a + b * b));
-            if (A.getName().equals(e.getName()) || (ans <= 25)) {
+            if (A.getName().equals(e.getName()) || (ans <= 15)) {
 
                 throw new Invalid("Vertex is Already Present");
 
@@ -175,7 +181,7 @@ public class Graph {
             a = Math.abs(a - x);
             b = Math.abs(b - y);
             int ans = (int) Math.round(Math.sqrt(a * a + b * b));
-            if (ans <= 12) {
+            if (ans <= 10) {
 
                 flag = 1;
                 return A;

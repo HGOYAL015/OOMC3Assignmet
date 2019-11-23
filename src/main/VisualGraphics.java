@@ -35,7 +35,9 @@ class visual extends JPanel {
         gg.setStroke(new BasicStroke((float) 1.2));
         for (Vertex A : OOM.G.getV()) {
             gg.setColor(Color.black);
-            gg.fillOval(A.getX() - 12, A.getY() - 12, 24, 24);
+            gg.fillOval(A.getX() - 8, A.getY() - 8, 16, 16);
+            gg.setColor(Color.BLUE);
+            gg.drawString(A.getName(), A.getX() - 10, A.getY() - 10);
         }
         for (Vertex A : OOM.G.getV()) {
             int x = A.getX();
@@ -44,8 +46,35 @@ class visual extends JPanel {
                 int x1 = OOM.G.getVert().get(B).getX();
                 int y1 = OOM.G.getVert().get(B).getY();
                 gg.setColor(Color.red);
+                gg.setStroke(new BasicStroke(2));
 //                if(OOM.G.getEdges().get(B).contains(A.getName()))
+
                 gg.drawLine(x, y, x1, y1);
+
+                gg.setColor(Color.red);
+
+            }
+        }
+        for (Vertex A : OOM.G.getV()) {
+            int x = A.getX();
+            int y = A.getY();
+            for (String B : OOM.G.getEdges().get(A.getName())) {
+                int x1 = OOM.G.getVert().get(B).getX();
+                int y1 = OOM.G.getVert().get(B).getY();
+                gg.setColor(Color.red);
+                gg.setStroke(new BasicStroke(2));
+                int dist = (x - x1) * (x - x1) + (y - y1) * (y - y1);
+                dist = (int) Math.sqrt(dist);
+                int t1x = (x1 * 50 + x * (dist - 50)) / dist;
+                int t1y = (y1 * 50 + y * (dist - 50)) / dist;
+                int t2x = (x1 * 30 + x * (dist - 30)) / dist;
+                int t2y = (y1 * 30 + y * (dist - 30)) / dist;
+
+                gg.setColor(Color.BLUE);
+                int w = (int) OOM.G.getWeight(A.getName(), B);
+                gg.setStroke(new BasicStroke(4));
+                gg.drawString(Integer.toString(w), (t1x + t2x) / 2, (t1y + t2y) / 2 + 10);
+
             }
         }
         gg.setStroke(new BasicStroke(3));
@@ -99,6 +128,37 @@ class visual extends JPanel {
             }
         }
         if (anim == 1) {
+            File file = new File("/home/harsh/NetBeansProjects/OOM/src/main/Path");
+            try {
+                Scanner scan = new Scanner(file);
+                String s = scan.nextLine();
+                s = s.substring(0, s.length() - 1);
+                String[] inputs = s.split("-->");
+                gg.setColor(Color.red);
+                gg.drawOval(VisualGraphics.To.getX() - 15, VisualGraphics.To.getY() - 15, 30, 30);
+                gg.setColor(Color.green);
+                if (inputs.length > 1) {
+                    for (int i = 0; i < inputs.length - 1; i++) {
+                        if (!(OOM.G.getVert().containsKey(inputs[i]) && OOM.G.getVert().containsKey(inputs[i + 1]))) {
+                            break;
+                        }
+
+                        int x = OOM.G.getVert().get(inputs[i]).getX();
+                        int y = OOM.G.getVert().get(inputs[i]).getY();
+                        int x1 = OOM.G.getVert().get(inputs[i + 1]).getX();
+                        int y1 = OOM.G.getVert().get(inputs[i + 1]).getY();
+//                            gg.setStroke(new BasicStroke(1.0f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,10.0f, 10.0, 0.0f));
+
+//final static float dash1[] = {10.0f}
+                        gg.drawLine(x, y, x1, y1);
+
+                    }
+                }
+
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "Some Error Occured");
+            }
+
             gg.setColor(Color.black);
             gg.setStroke(new BasicStroke(2));
             if (style == 1) {
@@ -600,10 +660,13 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
             int x = evt.getX();
 
             int y = evt.getY();
-            String s = "V" + Integer.toString(OOM.G.getV().size());
+            String s = JOptionPane.showInputDialog("Please Provide Name of Vertex");
 
-            Vertex V1 = new Vertex(s, x, y);
             try {
+                if(s==null || s.isEmpty()){
+                    throw new Invalid("Please Enter Correct Name Of vertex");
+                }
+                Vertex V1 = new Vertex(s, x, y);
                 OOM.G.searchVertex(V1);
                 OOM.G.addVertex(V1);
                 repaint();
@@ -1092,8 +1155,8 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         if (AnimateR.isSelected()) {
             k = new ArrayList<P>();
-            int ss = (int) Math.random() * 100;
-            Label.setText("No Mouse Operation is Possible on Below Panel" + ss);
+
+            Label.setText("No Mouse Operation is Possible on Below Panel");
             File file = new File("/home/harsh/NetBeansProjects/OOM/src/main/Path");
             try {
                 Scanner scan = new Scanner(file);
