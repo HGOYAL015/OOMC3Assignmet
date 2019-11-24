@@ -17,10 +17,15 @@ import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import static main.VisualGraphics.anim;
-import static main.VisualGraphics.ax;
-import static main.VisualGraphics.ay;
+//import static main.VisualGraphics.ax;
+import static main.VisualGraphics.ax1;
+import static main.VisualGraphics.ax2;
+//import static main.VisualGraphics.ay;
+import static main.VisualGraphics.ay1;
+import static main.VisualGraphics.ay2;
 import static main.VisualGraphics.hg;
-import static main.VisualGraphics.style;
+import static main.VisualGraphics.style1;
+import static main.VisualGraphics.*;
 
 /**
  *
@@ -73,7 +78,7 @@ class visual extends JPanel {
                 gg.setColor(Color.BLUE);
                 int w = (int) OOM.G.getWeight(A.getName(), B);
                 gg.setStroke(new BasicStroke(4));
-                gg.drawString(Integer.toString(w), (t1x + t2x) / 2, (t1y + t2y) / 2 + 10);
+                gg.drawString(Integer.toString(w), (t1x + t2x) / 2, (t1y + t2y) / 2 + 20);
 
             }
         }
@@ -158,32 +163,53 @@ class visual extends JPanel {
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "Some Error Occured");
             }
-
+            int R = (int) (Math.random() * 256);
+            int G = (int) (Math.random() * 256);
+            int B = (int) (Math.random() * 256);
+            Color randomColor;
+            randomColor = new Color(R, G, B);
+//            gg.setColor(randomColor);
             gg.setColor(Color.black);
             gg.setStroke(new BasicStroke(2));
-            if (style == 1) {
-                gg.drawOval(ax - 6, ay - 6, 12, 12);
-            } else if (style == 2) {
-                gg.drawRect(ax - 6, ay - 6, 12, 12);
-            } else if (style == 3) {
+            if (VisualGraphics.style1 == 1 && h1 != null) {
+//                ax=ax1;
+//                ay=ay1;
+                gg.drawOval(ax1 - 6, ay1 - 6, 12, 12);
+            }
+            if (VisualGraphics.style2 == 1 && h2 != null) {
+//                ax=ax2;
+//                ay=ay2;
+                gg.setColor(Color.GREEN);
+                gg.drawRect(ax2 - 6, ay2 - 6, 12, 12);
+            }
+            if (VisualGraphics.style4 == 1 && h4 != null) {
+//                ax = ax4;
+//                ay = ay4;
                 gg.setStroke(new BasicStroke(3));
-                gg.setColor(Color.black);
-                gg.drawLine(ax, ay, ax - 12, ay);
-                gg.drawLine(ax, ay, ax, ay + 12);
-                gg.drawLine(ax, ay, ax + 12, ay);
-                gg.drawLine(ax, ay, ax, ay - 12);
-            } else if (style == 4) {
+                gg.setColor(Color.blue);
+                gg.drawLine(ax4, ay4, ax4 - 12, ay4);
+                gg.drawLine(ax4, ay4, ax4, ay4 + 12);
+                gg.drawLine(ax4, ay4, ax4 + 12, ay4);
+                gg.drawLine(ax4, ay4, ax4, ay4 - 12);
+            }
+            if (VisualGraphics.style3 == 1 && h3 != null) {
+//                ax=ax3;
+//                ay=ay3;
                 gg.setStroke(new BasicStroke(3));
-                gg.setColor(Color.black);
+                gg.setColor(Color.pink);
 
-                gg.drawLine(ax - 9, ay - 9, ax + 9, ay + 9);
-                gg.drawLine(ax - 9, ay + 9, ax + 9, ay - 9);
+                gg.drawLine(ax3 - 9, ay3 - 9, ax3 + 9, ay3 + 9);
+                gg.drawLine(ax3 - 9, ay3 + 9, ax3 + 9, ay3 - 9);
 
-            } else if (style == 5) {
+            }
+            if (VisualGraphics.style5 == 1 && h5 != null) {
+//                ax=ax5;
+//                ay=ay5;
+                gg.setColor(Color.MAGENTA);
                 gg.setStroke(new BasicStroke(2));
-                gg.setColor(Color.black);
-                int X[] = {ax, ax, ax + 9, ax};
-                int Y[] = {ay, ay + 9, ay, ay - 9};
+//                gg.setColor(Color.black);
+                int X[] = {ax5, ax5, ax5 + 9, ax5};
+                int Y[] = {ay5, ay5 + 9, ay5, ay5 - 9};
                 gg.drawPolygon(X, Y, X.length);
             }
 
@@ -220,12 +246,18 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
 //    choice=3 //ModifyVertex
 //    choice=4 //DeleteVertex
 //    choice=5 //DeleteEdge
-    static int choice = 5, style = 1;
+    static int choice = 5;
     static Vertex From = null;
     static Vertex To = null;
     static int anim = 0;
     static ArrayList<P> k = new ArrayList<P>();
     static ArrayList<P> hg = new ArrayList<P>();
+    static int style1 = 1;
+    static int style2 = 0;
+    static int style3 = 0;
+    static int style4 = 0;
+    static int style5 = 0;
+    static int ax1, ay1, ax2, ay2, ax3, ay3, ax4, ay4, ax5, ay5;
 
     public VisualGraphics() {
         initComponents();
@@ -654,6 +686,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
     private void GraphPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphPanelMouseClicked
         // TODO add your handling code here:
         AnimateR.setSelected(false);
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+
         anim = 0;
         AnimateR.setEnabled(false);
         if (choice == 1) { //AddVertex
@@ -663,7 +706,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
             String s = JOptionPane.showInputDialog("Please Provide Name of Vertex");
 
             try {
-                if(s==null || s.isEmpty()){
+                if (s == null || s.isEmpty()) {
                     throw new Invalid("Please Enter Correct Name Of vertex");
                 }
                 Vertex V1 = new Vertex(s, x, y);
@@ -790,13 +833,20 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
             }
         } else if (choice == 7)//Short Path
         {
-            if (h != null) {
-                h.interrupt();
-            }
-            anim = 0;
+            aisehi();
 
             AnimateR.setSelected(false);
             AnimateR.setEnabled(false);
+            Circle.setSelected(false);
+            Circle.setEnabled(false);
+            Square.setSelected(false);
+            Square.setEnabled(false);
+            Cross.setSelected(false);
+            Cross.setEnabled(false);
+            Plus.setSelected(false);
+            Plus.setEnabled(false);
+            Triangle.setSelected(false);
+            Triangle.setEnabled(false);
             System.out.println("IN Short Path");
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
             try {
@@ -813,11 +863,22 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
 
                         repaint();
                         AnimateR.setEnabled(true);
+
                     } catch (FileNotFoundException ex) {
                         From = null;
                         To = null;
                         AnimateR.setSelected(false);
                         AnimateR.setEnabled(false);
+                        Circle.setSelected(false);
+                        Circle.setEnabled(false);
+                        Square.setSelected(false);
+                        Square.setEnabled(false);
+                        Cross.setSelected(false);
+                        Cross.setEnabled(false);
+                        Plus.setSelected(false);
+                        Plus.setEnabled(false);
+                        Triangle.setSelected(false);
+                        Triangle.setEnabled(false);
                         JOptionPane.showMessageDialog(null, "Some Error Occured");
                     } catch (Invalid ee) {
                         From = null;
@@ -829,6 +890,16 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                     To = null;
                     AnimateR.setSelected(false);
                     AnimateR.setEnabled(false);
+                    Circle.setSelected(false);
+                    Circle.setEnabled(false);
+                    Square.setSelected(false);
+                    Square.setEnabled(false);
+                    Cross.setSelected(false);
+                    Cross.setEnabled(false);
+                    Plus.setSelected(false);
+                    Plus.setEnabled(false);
+                    Triangle.setSelected(false);
+                    Triangle.setEnabled(false);
                 }
                 System.out.println(From + " " + V1);
                 repaint();
@@ -855,31 +926,46 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         G1.add(ModifyV);
         G1.add(ShortPath);
 
-        G2 = new ButtonGroup();
-        G2.add(Circle);
-        G2.add(Square);
-        G2.add(Cross);
-        G2.add(Plus);
-        G2.add(Triangle);
-
-        if (h != null) {
-            h.interrupt();
-        }
+//        G2 = new ButtonGroup();
+//        G2.add(Circle);
+//        G2.add(Square);
+//        G2.add(Cross);
+//        G2.add(Plus);
+//        G2.add(Triangle);
+        aisehi();
         anim = 0;
         AnimateR.setSelected(false);
         anim = 0;
         AnimateR.setEnabled(false);
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
         repaint();
     }//GEN-LAST:event_formWindowOpened
 
     private void GraphPanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GraphPanelMouseDragged
         // TODO add your handling code here:
-        if (h != null) {
-            h.interrupt();
-        }
+        aisehi();
         anim = 0;
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
         if (choice == 3) { //ModifyVertex
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
             try {
@@ -900,9 +986,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
-        if (h != null) {
-            h.interrupt();
-        }
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+        aisehi();
         anim = 0;
         if (choice == 3) { //Modify Vertex
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
@@ -927,9 +1021,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
-        if (h != null) {
-            h.interrupt();
-        }
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+        aisehi();
         anim = 0;
         if (choice == 3) { //ModifyVertex
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
@@ -947,9 +1049,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
 
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
-        if (h != null) {
-            h.interrupt();
-        }
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+        aisehi();
         anim = 0;
         if (ModifyE.isSelected()) {
             Label.setText("Modify Edge By Selecting FromVertex and To Vertex");
@@ -969,9 +1079,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
-        if (h != null) {
-            h.interrupt();
-        }
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+        aisehi();
         anim = 0;
         if (AddV.isSelected()) {
             Label.setText("Add Vertex By Clicking on the Panel");
@@ -990,9 +1108,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
-        if (h != null) {
-            h.interrupt();
-        }
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+        aisehi();
         anim = 0;
         if (DeleteV.isSelected()) {
             Label.setText("Delete Vertex By Clicking on the Vertex");
@@ -1012,9 +1138,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
-        if (h != null) {
-            h.interrupt();
-        }
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+        aisehi();
         anim = 0;
         if (ModifyV.isSelected()) {
             Label.setText("Modify Vertex By Dragging Vertex");
@@ -1036,9 +1170,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
-        if (h != null) {
-            h.interrupt();
-        }
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+        aisehi();
         anim = 0;
         if (AddE.isSelected()) {
             Label.setText("Add Edge By Selecting FromVertex & ToVertex");
@@ -1059,9 +1201,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
-        if (h != null) {
-            h.interrupt();
-        }
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+        aisehi();
         anim = 0;
         if (DeleteE.isSelected()) {
             Label.setText("Delete Edge By Selecting FromVertex & ToVertex");
@@ -1082,9 +1232,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
-        if (h != null) {
-            h.interrupt();
-        }
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+        aisehi();
         anim = 0;
         if (ShortPath.isSelected()) {
             Label.setText("Select From Vertex & To Vertex");
@@ -1105,9 +1263,17 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         AnimateR.setSelected(false);
         AnimateR.setEnabled(false);
-        if (h != null) {
-            h.interrupt();
-        }
+        Circle.setSelected(false);
+        Circle.setEnabled(false);
+        Square.setSelected(false);
+        Square.setEnabled(false);
+        Cross.setSelected(false);
+        Cross.setEnabled(false);
+        Plus.setSelected(false);
+        Plus.setEnabled(false);
+        Triangle.setSelected(false);
+        Triangle.setEnabled(false);
+        aisehi();
         anim = 0;
         anim = 0;
         this.dispose();
@@ -1119,10 +1285,13 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         this.dispose();
     }//GEN-LAST:event_BackActionPerformed
     public Thread h = null;
-    static int ax = 0;
-    static int ay = 0;
-//    visual GraphPanel;
+    public static Thread h1 = null; //Circle
+    public static Thread h2 = null; //Square
+    public static Thread h3 = null; //Cross
+    public static Thread h4 = null;//Plus
+    public static Thread h5 = null;//Triangle
 
+//    visual GraphPanel;
     @Override
     public void run() {
 //        initComponents();
@@ -1130,15 +1299,32 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         System.out.println(this);
         while (anim == 1) {
             for (P A : hg) {
-
+                int ax = 0;
+                int ay = 0;
 //                System.out.println("I amin " + x + "  ; " + y);
                 ax = A.getX();
                 ay = A.getY();
                 repaint();
+                if (style1 == 1 && Thread.currentThread().equals(h1)) {
+                    ax1 = ax;
+                    ay1 = ay;
+                } else if (style2 == 1 && Thread.currentThread().equals(h2)) {
+                    ax2 = ax;
+                    ay2 = ay;
+                } else if (style3 == 1 && Thread.currentThread().equals(h3)) {
+                    ax3 = ax;
+                    ay3 = ay;
+                } else if (style4 == 1 && Thread.currentThread().equals(h4)) {
+                    ax4 = ax;
+                    ay4 = ay;
+                } else if (style5 == 1 && Thread.currentThread().equals(h5)) {
+                    ax5 = ax;
+                    ay5 = ay;
+                }
 
 //            System.out.println("I amin " + ax + "  ; " + ay);
                 try {
-                    sleep((long) 20);
+                    sleep((long) 10);
                     if (anim == 0) {
                         Thread.currentThread().interrupt();
                     }
@@ -1151,9 +1337,35 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         }
 
     }
+
+    public void aisehi() {
+        anim = 0;
+
+        if (h1 != null) {
+            h1.interrupt();;
+            h1 = null;
+        }
+        if (h2 != null) {
+            h2.interrupt();;
+            h2 = null;
+        }
+        if (h3 != null) {
+            h3.interrupt();;
+            h3 = null;
+        }
+        if (h4 != null) {
+            h4.interrupt();;
+            h4 = null;
+        }
+        if (h5 != null) {
+            h5.interrupt();;
+            h5 = null;
+        }
+    }
     private void AnimateRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnimateRActionPerformed
         // TODO add your handling code here:
         if (AnimateR.isSelected()) {
+
             k = new ArrayList<P>();
 
             Label.setText("No Mouse Operation is Possible on Below Panel");
@@ -1202,25 +1414,89 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
             anim = 1;
             choice = 0;
 //            GraphPanel.repaint();
+            Circle.setEnabled(true);
+            Square.setEnabled(true);
+            Plus.setEnabled(true);
+            Cross.setEnabled(true);
+            Triangle.setEnabled(true);
+            Circle.setSelected(true);
             System.out.println("sdafds" + this);
-            h = new Thread(this);
-            h.start();
+            h1 = new Thread(this);
+            h1.start();
 
         } else if (!AnimateR.isSelected()) {
             Label.setText("Select From Vertex & To Vertex");
-            if (h != null) {
-                h.interrupt();
-            }
             anim = 0;
+
+            if (h1 != null) {
+                h1.interrupt();;
+                h1 = null;
+            }
+            if (h2 != null) {
+                h2.interrupt();;
+                h2 = null;
+            }
+            if (h3 != null) {
+                h3.interrupt();;
+                h3 = null;
+            }
+            if (h4 != null) {
+                h4.interrupt();;
+                h4 = null;
+            }
+            if (h5 != null) {
+                h5.interrupt();;
+                h5 = null;
+            }
             AnimateR.setSelected(false);
             AnimateR.setEnabled(false);
+            Circle.setSelected(false);
+            Circle.setEnabled(false);
+            Square.setSelected(false);
+            Square.setEnabled(false);
+            Cross.setSelected(false);
+            Cross.setEnabled(false);
+            Plus.setSelected(false);
+            Plus.setEnabled(false);
+            Triangle.setSelected(false);
+            Triangle.setEnabled(false);
             repaint();
         } else if (!AnimateR.isEnabled()) {
-            if (h != null) {
-                h.interrupt();
+
+            anim = 0;
+
+            if (h1 != null) {
+                h1.interrupt();;
+                h1 = null;
+            }
+            if (h2 != null) {
+                h2.interrupt();;
+                h2 = null;
+            }
+            if (h3 != null) {
+                h3.interrupt();;
+                h3 = null;
+            }
+            if (h4 != null) {
+                h4.interrupt();;
+                h4 = null;
+            }
+            if (h5 != null) {
+                h5.interrupt();;
+                h5 = null;
             }
             AnimateR.setSelected(false);
             AnimateR.setEnabled(false);
+            Circle.setSelected(false);
+            Circle.setEnabled(false);
+            Square.setSelected(false);
+            Square.setEnabled(false);
+            Cross.setSelected(false);
+            Cross.setEnabled(false);
+            Plus.setSelected(false);
+            Plus.setEnabled(false);
+            Triangle.setSelected(false);
+            Triangle.setEnabled(false);
             repaint();
         }
     }//GEN-LAST:event_AnimateRActionPerformed
@@ -1228,15 +1504,40 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
     private void CircleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CircleActionPerformed
         // TODO add your handling code here:
         if (Circle.isSelected()) {
-            style = 1;
+            style1 = 1;
+            if (anim == 1) {
+                h1 = new Thread(this);
+                h1.start();
+            }
             repaint();
+        } else {
+            style1 = 0;
+            if (h1 != null) {
+                h1.interrupt();
+                h1 = null;
+
+            }
         }
+        repaint();
     }//GEN-LAST:event_CircleActionPerformed
 
     private void SquareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SquareActionPerformed
         // TODO add your handling code here:
         if (Square.isSelected()) {
-            style = 2;
+            style2 = 1;
+            if (anim == 1) {
+                h2 = new Thread(this);
+
+                h2.start();
+
+            }
+            repaint();
+        } else {
+            style2 = 0;
+            if (h2 != null) {
+                h2.interrupt();
+                h2 = null;
+            }
             repaint();
         }
     }//GEN-LAST:event_SquareActionPerformed
@@ -1244,7 +1545,21 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
     private void CrossActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrossActionPerformed
         // TODO add your handling code here:
         if (Cross.isSelected()) {
-            style = 4;
+            style3 = 1;
+            if (anim == 1) {
+                h3 = new Thread(this);
+
+                h3.start();
+
+            }
+            repaint();
+            repaint();
+        } else {
+            style3 = 0;
+            if (h3 != null) {
+                h3.interrupt();
+                h3 = null;
+            }
             repaint();
         }
     }//GEN-LAST:event_CrossActionPerformed
@@ -1252,7 +1567,20 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
     private void PlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlusActionPerformed
         // TODO add your handling code here:
         if (Plus.isSelected()) {
-            style = 3;
+            style4 = 1;
+            if (anim == 1) {
+                h4 = new Thread(this);
+
+                h4.start();
+
+            }
+            repaint();
+        } else {
+            style4 = 0;
+            if (h4 != null) {
+                h4.interrupt();
+                h4 = null;
+            }
             repaint();
         }
     }//GEN-LAST:event_PlusActionPerformed
@@ -1260,9 +1588,23 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
     private void TriangleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TriangleActionPerformed
         // TODO add your handling code here:
         if (Triangle.isSelected()) {
-            style = 5;
+            style5 = 1;
+            if (anim == 1) {
+                h5 = new Thread(this);
+
+                h5.start();
+
+            }
+            repaint();
+        } else {
+            style5 = 0;
+            if (h5 != null) {
+                h5.interrupt();
+                h5 = null;
+            }
             repaint();
         }
+
     }//GEN-LAST:event_TriangleActionPerformed
 
     /**
