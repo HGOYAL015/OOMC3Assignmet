@@ -187,4 +187,16 @@ public class Path {
         int flag = 0;
         this.printPathShort(from, to, flag);
     }
+    public void printPath1(String from, String to,String ff) throws Invalid, FileNotFoundException {
+        System.out.println(from + " " + to);
+        PrintStream o = new PrintStream(new File("/home/harsh/NetBeansProjects/OOM/src/main/"+ff));
+        PrintStream console = System.out;
+        init();
+        reset(from);
+        this.Djsktra();
+        System.setOut(o);
+        int flag = 0;
+        this.printPathShort(from, to, flag);
+        System.setOut(console);
+    }
 }

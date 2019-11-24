@@ -57,6 +57,12 @@ public class Graph {
         }
     }
 
+    public void printPath(String s, String d, int t, String f) throws Invalid, FileNotFoundException {
+
+        P.printPath1(s, d,f);
+
+    }
+
     public void checkEdge(String from, String to) throws Invalid {
 
         ArrayList<String> temp = Edges.get(from);
@@ -100,9 +106,9 @@ public class Graph {
     }
 
     public void showEdges() {
-        int sum=0;
-        for(Vertex A:V){
-            sum+=Edges.get(A.getName()).size();
+        int sum = 0;
+        for (Vertex A : V) {
+            sum += Edges.get(A.getName()).size();
         }
         System.out.println(sum);
         sortVertex();
