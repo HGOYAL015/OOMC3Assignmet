@@ -94,7 +94,12 @@ class visual extends JPanel {
             }
             if (VisualGraphics.choice == 7 || choice == 8) {
                 gg.setColor(Color.ORANGE);
+
                 gg.drawOval(VisualGraphics.From.getX() - 15, VisualGraphics.From.getY() - 15, 30, 30);
+                if (To != null) {
+                    gg.setColor(Color.WHITE);
+                    gg.drawOval(To.getX() - 15, To.getY() - 15, 30, 30);
+                }
             }
         }
         if (VisualGraphics.To != null) {
@@ -358,7 +363,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -933,11 +938,11 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                         OOM.G.printPath(ffrom.getName(), V1.getName(), 1, "sss");
                         too = V1;
                         if (ffrom.getName().equals(too.getName())) {
-                            JOptionPane.showMessageDialog(null, "Please Select Destination Different From Source", "Alert!", JOptionPane.WARNING_MESSAGE);
+                            
                             too = null;
                         }
                         From = ffrom;
-                        
+                        To = too;
 
                         k = new ArrayList<P>();
 
@@ -970,6 +975,9 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                             this.dispose();
                         }
                         hg = new ArrayList<P>();
+                        if (k.size() < 2) {
+                            throw new Invalid("Please Select From Vertices and To Vertices Different");
+                        }
                         for (int i = 0; i < k.size() - 1; i++) {
                             int a = k.get(i + 1).getX();
                             int b = k.get(i + 1).getY();
@@ -999,19 +1007,20 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                     } catch (FileNotFoundException ex) {
                         ffrom = null;
                         too = null;
-                        From=null;
+                        From = null;
 
                         JOptionPane.showMessageDialog(null, "Some Error Occured");
                     } catch (Invalid ee) {
-                        From=null;
+                        From = null;
                         ffrom = null;
                         too = null;
-                        JOptionPane.showMessageDialog(null, ee.getMessage());
+                        JOptionPane.showMessageDialog(null, ee.getMessage(), "Alert!", JOptionPane.WARNING_MESSAGE);
+//                        JOptionPane.showMessageDialog(null, ee.getMessage());
                     }
                 } else {
 
                     ffrom = V1;
-                    From=ffrom;
+                    From = ffrom;
 
                     too = null;
 //                    aisehi();
@@ -1019,7 +1028,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                 System.out.println(From + " " + V1);
                 repaint();
             } catch (Invalid e) {
-                From=null;
+                From = null;
                 ffrom = null;
                 too = null;
                 repaint();
@@ -1312,10 +1321,10 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
 
     public void aisehi() {
         anim = 0;
-        ffrom=null;
-        From=null;
-        too=null;
-        To=null;
+        ffrom = null;
+        From = null;
+        too = null;
+        To = null;
         for (chlte A : animaa) {
             if (A.h != null) {
                 A.h.interrupt();
