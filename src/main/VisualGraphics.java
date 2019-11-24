@@ -174,49 +174,51 @@ class visual extends JPanel {
 //            Color randomColor;
 //            randomColor = new Color(R, G, B);
 //            gg.setColor(randomColor);
-            for (chlte A : animaa) {
-                gg.setColor(Color.black);
-                gg.setStroke(new BasicStroke(2));
-                if (A.style == 1 && A.getH() != null) {
+            if (animaa != null) {
+                for (chlte A : animaa) {
+                    gg.setColor(Color.black);
+                    gg.setStroke(new BasicStroke(2));
+                    if (A.style == 1 && A.getH() != null) {
 //                ax=ax;
 //                ay=ay;
-                    gg.drawOval(A.ax - 6, A.ay - 6, 12, 12);
-                }
-                if (A.style == 2 && A.getH() != null) {
+                        gg.drawOval(A.ax - 6, A.ay - 6, 12, 12);
+                    }
+                    if (A.style == 2 && A.getH() != null) {
 //                ax=ax2;
 //                ay=ay2;
-                    gg.setColor(Color.GREEN);
-                    gg.drawRect(A.ax - 6, A.ay - 6, 12, 12);
-                }
-                if (A.style == 4 && A.getH() != null) {
+                        gg.setColor(Color.GREEN);
+                        gg.drawRect(A.ax - 6, A.ay - 6, 12, 12);
+                    }
+                    if (A.style == 4 && A.getH() != null) {
 //                ax = ax4;
 //                ay = ay4;
-                    gg.setStroke(new BasicStroke(3));
-                    gg.setColor(Color.blue);
-                    gg.drawLine(A.ax, A.ay, A.ax - 12, A.ay);
-                    gg.drawLine(A.ax, A.ay, A.ax, A.ay + 12);
-                    gg.drawLine(A.ax, A.ay, A.ax + 12, A.ay);
-                    gg.drawLine(A.ax, A.ay, A.ax, A.ay - 12);
-                }
-                if (A.style == 3 && A.getH() != null) {
+                        gg.setStroke(new BasicStroke(3));
+                        gg.setColor(Color.blue);
+                        gg.drawLine(A.ax, A.ay, A.ax - 12, A.ay);
+                        gg.drawLine(A.ax, A.ay, A.ax, A.ay + 12);
+                        gg.drawLine(A.ax, A.ay, A.ax + 12, A.ay);
+                        gg.drawLine(A.ax, A.ay, A.ax, A.ay - 12);
+                    }
+                    if (A.style == 3 && A.getH() != null) {
 //                ax=ax3;
 //                ay=ay3;
-                    gg.setStroke(new BasicStroke(3));
-                    gg.setColor(Color.pink);
+                        gg.setStroke(new BasicStroke(3));
+                        gg.setColor(Color.pink);
 
-                    gg.drawLine(A.ax - 9, A.ay - 9, A.ax + 9, A.ay + 9);
-                    gg.drawLine(A.ax - 9, A.ay + 9, A.ax + 9, A.ay - 9);
+                        gg.drawLine(A.ax - 9, A.ay - 9, A.ax + 9, A.ay + 9);
+                        gg.drawLine(A.ax - 9, A.ay + 9, A.ax + 9, A.ay - 9);
 
-                }
-                if (A.style == 5 && A.getH() != null) {
+                    }
+                    if (A.style == 5 && A.getH() != null) {
 //                ax=ax5;
 //                ay=ay5;
-                    gg.setColor(Color.MAGENTA);
-                    gg.setStroke(new BasicStroke(2));
+                        gg.setColor(Color.MAGENTA);
+                        gg.setStroke(new BasicStroke(2));
 //                gg.setColor(Color.black);
-                    int X[] = {A.ax, A.ax, A.ax + 9, A.ax};
-                    int Y[] = {A.ay, A.ay + 9, A.ay, A.ay - 9};
-                    gg.drawPolygon(X, Y, X.length);
+                        int X[] = {A.ax, A.ax, A.ax + 9, A.ax};
+                        int Y[] = {A.ay, A.ay + 9, A.ay, A.ay - 9};
+                        gg.drawPolygon(X, Y, X.length);
+                    }
                 }
             }
 
@@ -886,7 +888,6 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
             }
         } else if (choice == 7)//Short Path
         {
-            aisehi();
 
             System.out.println("IN Short Path");
             Vertex V1 = new Vertex("X", evt.getX(), evt.getY());
@@ -938,7 +939,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                         OOM.G.printPath(ffrom.getName(), V1.getName(), 1, "sss");
                         too = V1;
                         if (ffrom.getName().equals(too.getName())) {
-                            
+
                             too = null;
                         }
                         From = ffrom;
@@ -1007,12 +1008,14 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                     } catch (FileNotFoundException ex) {
                         ffrom = null;
                         too = null;
+                        To = null;
                         From = null;
 
                         JOptionPane.showMessageDialog(null, "Some Error Occured");
                     } catch (Invalid ee) {
                         From = null;
                         ffrom = null;
+                        To = null;
                         too = null;
                         JOptionPane.showMessageDialog(null, ee.getMessage(), "Alert!", JOptionPane.WARNING_MESSAGE);
 //                        JOptionPane.showMessageDialog(null, ee.getMessage());
@@ -1021,7 +1024,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
 
                     ffrom = V1;
                     From = ffrom;
-
+                    To = null;
                     too = null;
 //                    aisehi();
                 }
@@ -1029,6 +1032,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                 repaint();
             } catch (Invalid e) {
                 From = null;
+                To = null;
                 ffrom = null;
                 too = null;
                 repaint();
@@ -1325,12 +1329,15 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         From = null;
         too = null;
         To = null;
-        for (chlte A : animaa) {
-            if (A.h != null) {
-                A.h.interrupt();
-                A.h = null;
+        if (animaa != null) {
+            for (chlte A : animaa) {
+                if (A.h != null) {
+                    A.h.interrupt();
+                    A.h = null;
+                }
             }
         }
+        animaa = null;
 
     }
     private void AnimateRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnimateRActionPerformed
@@ -1338,6 +1345,11 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
         if (AnimateR.isSelected()) {
             choice = 8;
             anim = 1;
+            From = null;
+            To = null;
+            ffrom = null;
+            too = null;
+            animaa = new ArrayList<chlte>();
 
             Label.setText("Select From Vertex & To Vertex");
 

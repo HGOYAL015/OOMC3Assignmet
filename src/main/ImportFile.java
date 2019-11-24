@@ -137,7 +137,7 @@ public class ImportFile extends javax.swing.JFrame {
                         System.out.println(e.getMessage());
 
                     }catch(ArrayIndexOutOfBoundsException ee){
-                        JOptionPane.showMessageDialog(null, "Please Provide Correct Vertex");
+                        JOptionPane.showMessageDialog(null, "Vertex Does Not Match the Required Format");
                         System.out.println(ee.getMessage());
                         exit(0);
                     }
@@ -174,13 +174,18 @@ public class ImportFile extends javax.swing.JFrame {
                             exit(0);
                             System.out.println(e.getMessage());
 
-                        }
+                        }catch(ArrayIndexOutOfBoundsException ee){
+                        JOptionPane.showMessageDialog(null, "Input Does Not Match The Required Format");
+                        System.out.println(ee.getMessage());
+                        exit(0);
+                    }
                     }
                 }
+                JOptionPane.showMessageDialog(null,"Input Taken");
                 this.dispose();
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "File Not Found");
-                exit(0);
+                this.dispose();
             }
 
         }
