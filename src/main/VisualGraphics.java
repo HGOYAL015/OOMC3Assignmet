@@ -104,7 +104,7 @@ class visual extends JPanel {
         }
         if (VisualGraphics.To != null) {
             if (VisualGraphics.choice == 7) {
-                File file = new File("/home/harsh/NetBeansProjects/OOM/src/main/Path");
+                File file = new File("src/main/Path");
                 try {
                     Scanner scan = new Scanner(file);
                     String s = scan.nextLine();
@@ -138,7 +138,7 @@ class visual extends JPanel {
             }
         }
         if (choice == 8 && anim == 1) {
-//            File file = new File("/home/harsh/NetBeansProjects/OOM/src/main/Path");
+//            File file = new File("src/main/Path");
 //            try {
 //                Scanner scan = new Scanner(file);
 //                String s = scan.nextLine();
@@ -948,7 +948,7 @@ public class VisualGraphics extends javax.swing.JFrame implements Runnable {
                         k = new ArrayList<P>();
 
 //                        Label.setText("No Mouse Operation is Possible on Below Panel");
-                        File file = new File("/home/harsh/NetBeansProjects/OOM/src/main/sss");
+                        File file = new File("src/main/sss");
                         try {
                             Scanner scan = new Scanner(file);
                             String s = scan.nextLine();

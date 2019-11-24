@@ -32,7 +32,7 @@ public class Path {
 
     public void printAllPaths(String s, String d) throws Invalid, FileNotFoundException {
 
-        PrintStream o = new PrintStream(new File("/home/harsh/NetBeansProjects/OOM/src/main/Path"));
+        PrintStream o = new PrintStream(new File("src/main/Path"));
         PrintStream console = System.out;
         System.setOut(o);
 
@@ -178,7 +178,7 @@ public class Path {
 
     public void printPath1(String from, String to) throws Invalid, FileNotFoundException {
         System.out.println(from + " " + to);
-        PrintStream o = new PrintStream(new File("/home/harsh/NetBeansProjects/OOM/src/main/Path"));
+        PrintStream o = new PrintStream(new File("src/main/Path"));
         PrintStream console = System.out;
         init();
         reset(from);
@@ -191,7 +191,7 @@ public class Path {
 
     public void printPath1(String from, String to, String ff) throws Invalid, FileNotFoundException {
         System.out.println(from + " " + to);
-        PrintStream o = new PrintStream(new File("/home/harsh/NetBeansProjects/OOM/src/main/" + ff));
+        PrintStream o = new PrintStream(new File("src/main/" + ff));
         PrintStream console = System.out;
         init();
         reset(from);

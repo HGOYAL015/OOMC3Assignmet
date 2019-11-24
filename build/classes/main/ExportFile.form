@@ -31,12 +31,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="File" min="-2" pref="397" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
                       <Component id="Import" min="-2" pref="87" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="File" min="-2" pref="397" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -76,7 +76,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="File">
       <Properties>
-        <Property name="text" type="java.lang.String" value="/home/harsh/NetBeansProjects/OOM/src/main/output"/>
+        <Property name="text" type="java.lang.String" value="src/main/output"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
